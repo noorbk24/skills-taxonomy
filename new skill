@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ansari Legal — Skill Taxonomies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#080b12;--bg3:#111827;--surface:#141c2e;--surface2:#1a2438;
+    --gold:#c9a84c;--gold-light:#e8c97a;--gold-border:rgba(201,168,76,0.25);
+    --text:#f0ece4;--text-muted:#7a8599;--text-dim:#3d4d66;
+    --border:rgba(255,255,255,0.06);--radius:12px;--line:rgba(255,255,255,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100vh}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+  .orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;opacity:.25}
+  .orb1{width:600px;height:600px;background:#1e3a5f;top:-200px;right:-100px}
+  .orb2{width:400px;height:400px;background:#2a1a4e;bottom:100px;left:-100px}
+
+  /* Layout */
+  .wrap{position:relative;z-index:1;padding:1.75rem 2.5rem;max-width:1400px;margin:0 auto}
+  header{display:flex;align-items:center;justify-content:space-between;padding-bottom:1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.75rem}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo-mark{width:34px;height:34px;border:1.5px solid var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--gold);font-weight:600}
+  .logo-name{font-family:'Playfair Display',serif;font-size:14px;font-weight:500;color:var(--text)}
+  .logo-sub{font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:1px}
+  .live-badge{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pg 2s infinite}
+  @keyframes pg{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(34,197,94,0)}}
+
+  .page-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:500;color:var(--text);margin-bottom:.3rem;letter-spacing:-.01em}
+  .page-title em{font-style:italic;color:var(--gold-light)}
+  .page-subtitle{font-size:13px;color:var(--text-muted);margin-bottom:1.75rem;line-height:1.6}
+
+  .stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:1.5rem}
+  .stat-card{background:var(--surface);border:1px solid var(--border);padding:1rem 1.25rem}
+  .stat-card:first-child{border-radius:var(--radius) 0 0 var(--radius)}.stat-card:last-child{border-radius:0 var(--radius) var(--radius) 0}
+  .stat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px}
+  .stat-value{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:500;color:var(--text);line-height:1}
+  .stat-value span{font-size:.85rem;font-family:'DM Sans',sans-serif;color:var(--gold);margin-left:4px}
+
+  /* Input panel */
+  .input-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+  .input-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .panel-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:500;color:var(--text);margin-bottom:3px}
+  .panel-sub{font-size:12px;color:var(--text-muted);margin-bottom:1rem}
+  .input-row{display:grid;grid-template-columns:1fr 200px auto;gap:10px;align-items:start}
+  textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;line-height:1.6;resize:vertical;min-height:105px;transition:border-color .2s}
+  textarea::placeholder{color:var(--text-dim)}
+  textarea:focus{outline:none;border-color:var(--gold-border)}
+  select{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0 30px 0 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;height:42px;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237a8599' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-color:var(--bg3);width:100%}
+  select:focus{outline:none;border-color:var(--gold-border)}
+  .extract-btn{height:42px;padding:0 22px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:7px}
+  .extract-btn:hover{background:var(--gold-light);transform:translateY(-1px)}
+  .extract-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .spinner{width:13px;height:13px;border:2px solid rgba(0,0,0,.2);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:none}
+  .spinner.on{display:block}@keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Role tabs */
+  .role-tabs{display:flex;gap:4px;margin-bottom:1.5rem;padding:5px;background:var(--surface);border-radius:12px;border:1px solid var(--border);width:fit-content;max-width:100%;overflow-x:auto}
+  .role-tab{padding:8px 18px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--text-muted);transition:all .2s;white-space:nowrap;border:1px solid transparent;display:flex;align-items:center;gap:7px}
+  .role-tab:hover{color:var(--text);background:var(--surface2)}
+  .role-tab.active{background:var(--bg3);color:var(--text);border-color:var(--border)}
+  .tab-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .badge{font-size:11px;font-family:'DM Mono',monospace;background:var(--bg);padding:2px 7px;border-radius:20px;color:var(--text-muted)}
+  .role-tab.active .badge{color:var(--gold)}
+
+  /* Taxonomy section */
+  .taxonomy-section{display:none;animation:fadeUp .35s ease}
+  .taxonomy-section.active{display:block}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .section-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2rem;gap:1.5rem}
+  .role-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:500;color:var(--text);line-height:1.2}
+  .role-tagline{font-size:12px;color:var(--text-muted);margin-top:5px}
+  .section-actions{display:flex;gap:8px;flex-shrink:0}
+  .export-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .export-btn:hover{border-color:var(--gold-border);color:var(--gold)}
+
+  /* Tree */
+  .tree-container{margin-bottom:2.5rem;overflow-x:auto;padding-bottom:1rem}
+  .tree-inner{display:flex;align-items:flex-start;gap:0;min-width:fit-content}
+  .root-node{padding:.75rem 1.25rem;background:var(--surface);border:1.5px solid var(--gold-border);border-radius:10px;display:flex;align-items:center;gap:10px;white-space:nowrap;flex-shrink:0}
+  .root-label{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:500}
+  .root-count{font-size:10px;font-family:'DM Mono',monospace;padding:2px 7px;border-radius:10px;border:1px solid}
+  .h-line{height:2px;width:2rem;background:var(--line);flex-shrink:0;align-self:center}
+  .domain-node{padding:.5rem 1rem;border-radius:8px;border:1px solid;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:8px;transition:transform .15s}
+  .domain-node:hover{transform:translateX(2px)}
+  .domain-icon{font-size:13px;opacity:.8}
+  .domain-label{font-size:12px;font-weight:500}
+  .domain-badge{font-size:10px;font-family:'DM Mono',monospace;padding:1px 6px;border-radius:8px;opacity:.65}
+  .cat-node{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:var(--text-dim);white-space:nowrap;padding:.45rem 0;flex-shrink:0;min-width:110px}
+  .skills-wrap{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:.2rem 0;max-width:500px}
+  .skill-tag{font-size:11.5px;padding:4px 10px;border-radius:20px;border:1px solid;cursor:default;transition:transform .15s;font-weight:400;white-space:nowrap}
+  .skill-tag:hover{transform:scale(1.05)}
+  .skill-tag.new-skill{animation:skillPop .5s cubic-bezier(.175,.885,.32,1.275) backwards}
+  @keyframes skillPop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+
+  /* Colours */
+  .dn-gold{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.22);color:#e8c97a}
+  .dn-blue{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.22);color:#93c5fd}
+  .dn-teal{background:rgba(45,212,191,.08);border-color:rgba(45,212,191,.22);color:#5eead4}
+  .dn-violet{background:rgba(167,139,250,.08);border-color:rgba(167,139,250,.22);color:#c4b5fd}
+  .dn-rose{background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.22);color:#fda4af}
+  .dn-amber{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.22);color:#fde68a}
+  .dn-green{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.22);color:#6ee7b7}
+  .sk-gold{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.25);color:#e8c97a}
+  .sk-blue{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.25);color:#93c5fd}
+  .sk-teal{background:rgba(45,212,191,.08);border-color:rgba(45,212,191,.25);color:#5eead4}
+  .sk-violet{background:rgba(167,139,250,.08);border-color:rgba(167,139,250,.25);color:#c4b5fd}
+  .sk-rose{background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.25);color:#fda4af}
+  .sk-amber{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.25);color:#fde68a}
+  .sk-gray{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:var(--text-muted)}
+  .sk-green{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.25);color:#6ee7b7}
+
+  .empty-state{text-align:center;padding:3.5rem 2rem;border:1px dashed var(--border);border-radius:var(--radius);margin-bottom:2rem}
+  .empty-icon{font-size:2rem;margin-bottom:.75rem;opacity:.4}
+  .empty-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--text-muted);margin-bottom:6px}
+  .empty-desc{font-size:12px;color:var(--text-dim);line-height:1.6}
+
+  /* Activity */
+  .activity-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem}
+  .activity-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:500;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+  .activity-title::after{content:'';flex:1;height:1px;background:var(--border)}
+  .activity-list{display:flex;flex-direction:column;gap:8px;max-height:180px;overflow-y:auto}
+  .activity-list::-webkit-scrollbar{width:3px}.activity-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .activity-item{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text-muted);padding:7px 10px;border-radius:6px;background:var(--bg3);animation:slideIn .3s ease}
+  @keyframes slideIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+  .activity-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .activity-time{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);margin-left:auto;flex-shrink:0}
+
+  .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 18px;font-size:12.5px;color:var(--text);z-index:500;transform:translateY(20px);opacity:0;transition:all .3s;max-width:320px;display:flex;align-items:center;gap:9px;pointer-events:none}
+  .toast.show{transform:translateY(0);opacity:1}
+  .toast-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+  footer{padding:1.5rem 0 .5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+  .footer-text{font-size:11px;color:var(--text-dim)}
+  .footer-right{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim)}
+
+  @media(max-width:768px){
+    .wrap{padding:1.25rem}
+    .input-row{grid-template-columns:1fr}
+    .stats-strip{grid-template-columns:repeat(2,1fr)}
+    .stat-card:nth-child(2){border-radius:0 var(--radius) var(--radius) 0}
+    .stat-card:nth-child(3){border-radius:var(--radius) 0 0 var(--radius)}
+    .section-header{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<div class="wrap">
+  <header>
+    <div class="logo">
+      <div class="logo-mark">AL</div>
+      <div>
+        <div class="logo-name">Ansari Legal</div>
+        <div class="logo-sub">Skills Intelligence</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="live-badge"><div class="live-dot"></div>Live</div>
+      <div id="last-updated" style="font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace">Ready</div>
+    </div>
+  </header>
+
+  <h1 class="page-title">Ansari Legal <em>Skill Taxonomies</em></h1>
+  <p class="page-subtitle">Paste any LinkedIn job description to extract and merge skills into your live taxonomy — powered by AI, free for all visitors.</p>
+
+  <div class="stats-strip">
+    <div class="stat-card"><div class="stat-label">Total Skills</div><div class="stat-value" id="stat-total">0 <span>skills</span></div></div>
+    <div class="stat-card"><div class="stat-label">Domains Mapped</div><div class="stat-value" id="stat-domains">0 <span>domains</span></div></div>
+    <div class="stat-card"><div class="stat-label">Roles Covered</div><div class="stat-value">5 <span>roles</span></div></div>
+    <div class="stat-card"><div class="stat-label">Last Extraction</div><div class="stat-value" id="stat-last" style="font-size:1.1rem">—</div></div>
+  </div>
+
+  <div class="input-panel">
+    <div class="panel-title">Extract from Job Description</div>
+    <div class="panel-sub">Paste any LinkedIn JD — skills are automatically categorised and merged into the taxonomy</div>
+    <div class="input-row">
+      <textarea id="jd-input" placeholder="Paste a LinkedIn job description here...&#10;&#10;e.g. 'We are seeking a visionary CEO to lead our boutique law firm. The ideal candidate will have deep expertise in legal strategy, P&amp;L management, client relationship development...'"></textarea>
+      <select id="role-select">
+        <option value="ceo">CEO / Founder</option>
+        <option value="legal">LegalTech Lead</option>
+        <option value="legalops">Legal Operations Lead</option>
+        <option value="ops">Chief of Staff / Operations</option>
+        <option value="finance">Finance Lead</option>
+      </select>
+      <button class="extract-btn" id="extract-btn" onclick="extractSkills()">
+        <div class="spinner" id="spinner"></div>
+        <span id="btn-text">Extract Skills</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="role-tabs">
+    <div class="role-tab active" onclick="switchTab('ceo')" id="tab-ceo"><div class="tab-dot" style="background:#c9a84c"></div>CEO / Founder<span class="badge" id="badge-ceo">0</span></div>
+    <div class="role-tab" onclick="switchTab('legal')" id="tab-legal"><div class="tab-dot" style="background:#60a5fa"></div>LegalTech Lead<span class="badge" id="badge-legal">0</span></div>
+    <div class="role-tab" onclick="switchTab('legalops')" id="tab-legalops"><div class="tab-dot" style="background:#34d399"></div>Legal Ops Lead<span class="badge" id="badge-legalops">0</span></div>
+    <div class="role-tab" onclick="switchTab('ops')" id="tab-ops"><div class="tab-dot" style="background:#2dd4bf"></div>Chief of Staff / Ops<span class="badge" id="badge-ops">0</span></div>
+    <div class="role-tab" onclick="switchTab('finance')" id="tab-finance"><div class="tab-dot" style="background:#a78bfa"></div>Finance Lead<span class="badge" id="badge-finance">0</span></div>
+  </div>
+
+  <div id="section-ceo" class="taxonomy-section active">
+    <div class="section-header">
+      <div><div class="role-title">CEO / Founder</div><div class="role-tagline">Strategic leadership, client development &amp; firm growth capabilities</div></div>
+      <div class="section-actions"><button class="export-btn" onclick="exportCSV('ceo')">↓ Export CSV</button></div>
+    </div>
+    <div id="tree-ceo"></div>
+  </div>
+
+  <div id="section-legal" class="taxonomy-section">
+    <div class="section-header">
+      <div><div class="role-title">LegalTech Lead</div><div class="role-tagline">Technology strategy, legal software &amp; digital transformation skills</div></div>
+      <div class="section-actions"><button class="export-btn" onclick="exportCSV('legal')">↓ Export CSV</button></div>
+    </div>
+    <div id="tree-legal"></div>
+  </div>
+
+  <div id="section-legalops" class="taxonomy-section">
+    <div class="section-header">
+      <div><div class="role-title">Legal Operations Lead</div><div class="role-tagline">Matter management, vendor relations, process improvement &amp; legal department efficiency</div></div>
+      <div class="section-actions"><button class="export-btn" onclick="exportCSV('legalops')">↓ Export CSV</button></div>
+    </div>
+    <div id="tree-legalops"></div>
+  </div>
+
+  <div id="section-ops" class="taxonomy-section">
+    <div class="section-header">
+      <div><div class="role-title">Chief of Staff / Operations</div><div class="role-tagline">Operational excellence, stakeholder management &amp; process leadership</div></div>
+      <div class="section-actions"><button class="export-btn" onclick="exportCSV('ops')">↓ Export CSV</button></div>
+    </div>
+    <div id="tree-ops"></div>
+  </div>
+
+  <div id="section-finance" class="taxonomy-section">
+    <div class="section-header">
+      <div><div class="role-title">Finance Lead</div><div class="role-tagline">Financial strategy, reporting, compliance &amp; risk management skills</div></div>
+      <div class="section-actions"><button class="export-btn" onclick="exportCSV('finance')">↓ Export CSV</button></div>
+    </div>
+    <div id="tree-finance"></div>
+  </div>
+
+  <div class="activity-panel">
+    <div class="activity-title">Extraction History</div>
+    <div class="activity-list" id="activity-list">
+      <div style="text-align:center;padding:1rem;font-size:12px;color:var(--text-dim)">No activity yet — extract your first job description above.</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-text">Ansari Legal · Skills Intelligence Platform</div>
+    <div class="footer-right" id="footer-time"></div>
+  </footer>
+</div>
+
+<div class="toast" id="toast"><div class="toast-dot" id="toast-dot"></div><span id="toast-msg"></span></div>
+
+<script>
+// ── Config ─────────────────────────────────────────────────────────
+const GROQ_KEY = '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';
+const GROQ_MODEL = 'llama-3.3-70b-versatile';
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+// ── State ──────────────────────────────────────────────────────────
+const STATE={ceo:{},legal:{},legalops:{},ops:{},finance:{}};
+const ROLE_META={
+  ceo:     {label:'CEO / Founder',         color:'#c9a84c'},
+  legal:   {label:'LegalTech Lead',         color:'#60a5fa'},
+  legalops:{label:'Legal Operations Lead',  color:'#34d399'},
+  ops:     {label:'Chief of Staff / Ops',   color:'#2dd4bf'},
+  finance: {label:'Finance Lead',           color:'#a78bfa'}
+};
+const DOMAIN_COLORS={
+  'Strategy & Leadership':'gold','Business Development':'gold',
+  'Finance & Commercial':'violet','Operations':'teal',
+  'Technology':'blue','Legal':'blue','People & Culture':'rose',
+  'Marketing & Growth':'amber','Data & Analytics':'teal',
+  'Risk & Compliance':'rose','LegalTech & Tools':'blue',
+  'Process & Efficiency':'teal','Stakeholder Management':'amber',
+  'Project Management':'violet','Financial Reporting':'violet',
+  'Tax & Compliance':'rose','Treasury & Cash Flow':'gold',
+  'Legal Operations':'green','Matter Management':'green',
+  'Vendor Management':'amber','Contract Management':'blue',
+  'Budget & Forecasting':'violet',
+};
+const DOMAIN_ICONS={
+  'Strategy & Leadership':'◆','Business Development':'◈',
+  'Finance & Commercial':'▲','Operations':'⬡',
+  'Technology':'◉','Legal':'⊕','People & Culture':'◎',
+  'Marketing & Growth':'◐','Data & Analytics':'◑',
+  'Risk & Compliance':'⊘','LegalTech & Tools':'⬢',
+  'Process & Efficiency':'◫','Stakeholder Management':'◬',
+  'Project Management':'◪','Financial Reporting':'▣',
+  'Tax & Compliance':'◧','Treasury & Cash Flow':'◮',
+  'Legal Operations':'◩','Matter Management':'◧',
+  'Vendor Management':'◨','Contract Management':'◫',
+  'Budget & Forecasting':'▣',
+};
+const TAG_COLORS=['sk-gold','sk-blue','sk-teal','sk-violet','sk-rose','sk-amber','sk-green','sk-gray'];
+const domainColorMap={};
+let domainColorIdx=0,activityLog=[];
+
+function getDomainTagColor(d){if(!domainColorMap[d]){domainColorMap[d]=TAG_COLORS[domainColorIdx%TAG_COLORS.length];domainColorIdx++;}return domainColorMap[d];}
+function getDomainNodeColor(d){const c=DOMAIN_COLORS[d];return c?'dn-'+c:'dn-gold';}
+function getDomainIcon(d){return DOMAIN_ICONS[d]||'◇';}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ── Tabs ───────────────────────────────────────────────────────────
+function switchTab(role){
+  document.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.taxonomy-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+role).classList.add('active');
+  document.getElementById('section-'+role).classList.add('active');
+}
+
+// ── Extract ────────────────────────────────────────────────────────
+async function extractSkills(){
+  const jd=document.getElementById('jd-input').value.trim();
+  const role=document.getElementById('role-select').value;
+  if(!jd){showToast('Paste a job description first.','#fb7185');return;}
+
+  const btn=document.getElementById('extract-btn');
+  const spinner=document.getElementById('spinner');
+  const btnText=document.getElementById('btn-text');
+  btn.disabled=true;spinner.classList.add('on');btnText.textContent='Extracting...';
+  document.getElementById('last-updated').textContent='Extracting...';
+
+  const roleLabel=ROLE_META[role].label;
+  const existing=JSON.stringify(STATE[role]);
+
+  const prompt=`You are a specialist skills taxonomy engine for a boutique law firm. Extract skills from this job description for the role: ${roleLabel}.
+
+EXISTING TAXONOMY FOR THIS ROLE (JSON):
+${existing||'{}'}
+
+JOB DESCRIPTION:
+${jd}
+
+Instructions:
+- Identify the most important domains for this specific role (e.g. "Strategy & Leadership", "LegalTech & Tools", "Financial Reporting", "Legal Operations", etc.)
+- Within each domain, group skills into 2-4 named categories
+- Each category contains an array of skill objects
+- Normalise informal terms: "biz dev" to "Business Development", "P&L" stays "P&L"
+- Deduplicate: do not add skills already present in the existing taxonomy
+- Focus on skills actually mentioned or strongly implied in the JD
+- Mark truly new skills (not in existing) with "new": true
+
+Return ONLY a valid JSON object. No explanation, no markdown, no code fences. Example format:
+{"Strategy & Leadership":{"Leadership":[ {"name":"Strategic Planning","new":true} ]}}`;
+
+  try{
+    const res=await fetch(GROQ_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_KEY},
+      body:JSON.stringify({
+        model:GROQ_MODEL,
+        temperature:0.2,
+        max_tokens:1500,
+        messages:[
+          {role:'system',content:'You are a skills taxonomy engine. You respond only with valid JSON objects, no explanation, no markdown.'},
+          {role:'user',content:prompt}
+        ]
+      })
+    });
+
+    if(!res.ok){
+      const e=await res.json().catch(()=>({}));
+      throw new Error(e?.error?.message||'Groq API error (HTTP '+res.status+')');
+    }
+
+    const data=await res.json();
+    let raw=data.choices?.[0]?.message?.content||'';
+    raw=raw.replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim();
+    const m=raw.match(/\{[\s\S]*\}/);
+    if(!m)throw new Error('Could not parse response. Please try again.');
+    const parsed=JSON.parse(m[0]);
+
+    let newCount=0;
+    for(const cats of Object.values(parsed))
+      for(const skills of Object.values(cats))
+        if(Array.isArray(skills))newCount+=skills.filter(s=>s&&s.new).length;
+
+    for(const [domain,cats] of Object.entries(parsed)){
+      if(!STATE[role][domain])STATE[role][domain]={};
+      for(const [cat,skills] of Object.entries(cats)){
+        if(!Array.isArray(skills))continue;
+        if(!STATE[role][domain][cat])STATE[role][domain][cat]=[];
+        for(const s of skills){
+          if(!s||!s.name)continue;
+          const exists=STATE[role][domain][cat].some(e=>e.name.toLowerCase()===s.name.toLowerCase());
+          if(!exists)STATE[role][domain][cat].push(s);
+        }
+      }
+    }
+
+    renderTree(role,true);updateStats();updateBadges();
+    const time=new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    activityLog.unshift({role,roleLabel:ROLE_META[role].label,color:ROLE_META[role].color,count:newCount,time});
+    renderActivity();
+    document.getElementById('stat-last').textContent=time;
+    document.getElementById('last-updated').textContent='Synced '+time;
+    document.getElementById('jd-input').value='';
+    showToast('+'+newCount+' new skills added to '+ROLE_META[role].label,'#22c55e');
+    switchTab(role);
+
+  }catch(e){
+    showToast('Error: '+e.message,'#fb7185');
+    document.getElementById('last-updated').textContent='Error — try again';
+    console.error(e);
+  }
+  btn.disabled=false;spinner.classList.remove('on');btnText.textContent='Extract Skills';
+}
+
+// ── Render tree ────────────────────────────────────────────────────
+function renderTree(role,highlight){
+  const container=document.getElementById('tree-'+role);
+  const data=STATE[role];
+  const domains=Object.entries(data);
+
+  if(!domains.length){
+    container.innerHTML=`<div class="empty-state"><div class="empty-icon">◈</div><div class="empty-title">No skills extracted yet</div><div class="empty-desc">Paste a job description above and click Extract Skills.</div></div>`;
+    return;
+  }
+
+  const roleColor=ROLE_META[role].color;
+  const totalSkills=domains.reduce((a,[,cats])=>a+Object.values(cats).reduce((b,s)=>b+(Array.isArray(s)?s.length:0),0),0);
+
+  let html='<div class="tree-container"><div class="tree-inner">';
+
+  // Root node
+  html+=`<div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0">`;
+  html+=`<div class="root-node" style="border-color:${roleColor}33;background:${roleColor}0d">`;
+  html+=`<span class="root-label" style="color:${roleColor}">${esc(ROLE_META[role].label)}</span>`;
+  html+=`<span class="root-count" style="color:${roleColor};background:${roleColor}1a;border-color:${roleColor}33">${totalSkills}</span>`;
+  html+=`</div></div>`;
+  html+=`<div class="h-line"></div>`;
+
+  html+=`<div style="display:flex;align-items:stretch;flex-shrink:0">`;
+  html+=`<div style="display:flex;flex-direction:column;align-items:flex-start">`;
+
+  domains.forEach(([domain,cats],di)=>{
+    const catEntries=Object.entries(cats).filter(([,s])=>Array.isArray(s)&&s.length);
+    if(!catEntries.length)return;
+    const nodeCls=getDomainNodeColor(domain);
+    const tagCls=getDomainTagColor(domain);
+    const icon=getDomainIcon(domain);
+    const skillCount=catEntries.reduce((a,[,s])=>a+s.length,0);
+    const isLast=di===domains.length-1;
+
+    html+=`<div style="display:flex;align-items:stretch">`;
+    html+=`<div style="display:flex;flex-direction:column;align-items:center;width:2px;flex-shrink:0">`;
+    if(di===0)html+=`<div style="height:1.1rem;width:2px;background:var(--line)"></div>`;
+    html+=`<div style="width:2px;background:var(--line);flex:1;min-height:1.1rem"></div>`;
+    if(!isLast)html+=`<div style="width:2px;background:var(--line);flex:1;min-height:1.1rem"></div>`;
+    html+=`</div>`;
+
+    html+=`<div style="display:flex;flex-direction:column">`;
+    html+=`<div style="display:flex;align-items:center">`;
+    html+=`<div style="height:2px;width:1.5rem;background:var(--line);flex-shrink:0"></div>`;
+    html+=`<div class="domain-node ${nodeCls}" style="animation:fadeUp .3s ease ${di*60}ms backwards">`;
+    html+=`<span class="domain-icon">${icon}</span>`;
+    html+=`<span class="domain-label">${esc(domain)}</span>`;
+    html+=`<span class="domain-badge">${skillCount}</span>`;
+    html+=`</div>`;
+    html+=`<div style="height:2px;width:1.75rem;background:var(--line);flex-shrink:0"></div>`;
+
+    html+=`<div style="display:flex;align-items:stretch">`;
+    html+=`<div style="display:flex;flex-direction:column;align-items:center;width:2px;flex-shrink:0">`;
+    catEntries.forEach((_,ci)=>{
+      if(ci===0)html+=`<div style="height:1rem;width:2px;background:var(--line)"></div>`;
+      html+=`<div style="width:2px;background:var(--line);flex:1;min-height:1.8rem"></div>`;
+      if(ci<catEntries.length-1)html+=`<div style="width:2px;background:var(--line);flex:1;min-height:1.8rem"></div>`;
+    });
+    html+=`</div>`;
+
+    html+=`<div style="display:flex;flex-direction:column;gap:.5rem;padding:.3rem 0">`;
+    catEntries.forEach(([cat,skills])=>{
+      html+=`<div style="display:flex;align-items:center">`;
+      html+=`<div style="height:2px;width:1.25rem;background:var(--line);flex-shrink:0"></div>`;
+      html+=`<div class="cat-node">${esc(cat)}</div>`;
+      html+=`<div style="height:2px;width:1rem;background:var(--line);flex-shrink:0"></div>`;
+      html+=`<div class="skills-wrap">`;
+      skills.forEach((s,si)=>{
+        const newCls=highlight&&s.new?' new-skill':'';
+        const delay=highlight&&s.new?` style="animation-delay:${si*50}ms"`:'';
+        html+=`<span class="skill-tag ${tagCls}${newCls}"${delay}>${esc(s.name||'')}</span>`;
+      });
+      html+=`</div></div>`;
+    });
+    html+=`</div></div></div></div></div>`;
+    if(!isLast)html+=`<div style="height:.6rem"></div>`;
+  });
+
+  html+=`</div></div></div></div>`;
+  container.innerHTML=html;
+}
+
+// ── Stats & badges ─────────────────────────────────────────────────
+function updateStats(){
+  let total=0;const domains=new Set();
+  for(const data of Object.values(STATE))
+    for(const [d,cats] of Object.entries(data)){
+      domains.add(d);
+      for(const s of Object.values(cats))if(Array.isArray(s))total+=s.length;
+    }
+  document.getElementById('stat-total').innerHTML=total+' <span>skills</span>';
+  document.getElementById('stat-domains').innerHTML=domains.size+' <span>domains</span>';
+}
+function updateBadges(){
+  for(const role of ['ceo','legal','legalops','ops','finance']){
+    let count=0;
+    for(const cats of Object.values(STATE[role]))
+      for(const s of Object.values(cats))if(Array.isArray(s))count+=s.length;
+    document.getElementById('badge-'+role).textContent=count;
+  }
+}
+
+// ── Activity ───────────────────────────────────────────────────────
+function renderActivity(){
+  const list=document.getElementById('activity-list');
+  if(!activityLog.length)return;
+  list.innerHTML=activityLog.slice(0,12).map(e=>
+    `<div class="activity-item"><div class="activity-dot" style="background:${e.color}"></div><span>Added <strong>${e.count}</strong> new skills to <strong>${esc(e.roleLabel)}</strong></span><span class="activity-time">${e.time}</span></div>`
+  ).join('');
+}
+
+// ── Export CSV ─────────────────────────────────────────────────────
+function exportCSV(role){
+  const data=STATE[role];
+  if(!Object.keys(data).length){showToast('Nothing to export yet.','#fbbf24');return;}
+  let csv='Domain,Category,Skill\n';
+  for(const [d,cats] of Object.entries(data))
+    for(const [cat,skills] of Object.entries(cats))
+      if(Array.isArray(skills))
+        for(const s of skills)
+          csv+=`"${d.replace(/"/g,'""')}","${cat.replace(/"/g,'""')}","${(s.name||'').replace(/"/g,'""')}"\n`;
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`ansari-legal-skills-${role}-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  showToast('CSV exported.','#22c55e');
+}
+
+// ── Toast ──────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg,color){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  document.getElementById('toast-dot').style.background=color;
+  t.classList.add('show');clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3800);
+}
+
+// ── Clock ──────────────────────────────────────────────────────────
+function updateClock(){
+  document.getElementById('footer-time').textContent=new Date().toLocaleString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+updateClock();setInterval(updateClock,30000);
+
+['ceo','legal','legalops','ops','finance'].forEach(r=>renderTree(r,false));
+</script>
+</body>
+</html>
