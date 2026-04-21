@@ -22,7 +22,6 @@
   .orb1{width:600px;height:600px;background:#1e3a5f;top:-200px;right:-100px}
   .orb2{width:400px;height:400px;background:#2a1a4e;bottom:100px;left:-100px}
 
-  /* Layout */
   .wrap{position:relative;z-index:1;padding:1.75rem 2.5rem;max-width:1400px;margin:0 auto}
   header{display:flex;align-items:center;justify-content:space-between;padding-bottom:1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.75rem}
   .logo{display:flex;align-items:center;gap:12px}
@@ -32,6 +31,9 @@
   .live-badge{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
   .live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pg 2s infinite}
   @keyframes pg{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(34,197,94,0)}}
+  .save-indicator{font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:6px}
+  .save-dot{width:6px;height:6px;border-radius:50%;background:var(--text-dim);transition:background .3s}
+  .save-dot.saved{background:#22c55e}
 
   .page-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:500;color:var(--text);margin-bottom:.3rem;letter-spacing:-.01em}
   .page-title em{font-style:italic;color:var(--gold-light)}
@@ -44,7 +46,6 @@
   .stat-value{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:500;color:var(--text);line-height:1}
   .stat-value span{font-size:.85rem;font-family:'DM Sans',sans-serif;color:var(--gold);margin-left:4px}
 
-  /* Input panel */
   .input-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
   .input-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
   .panel-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:500;color:var(--text);margin-bottom:3px}
@@ -61,7 +62,6 @@
   .spinner{width:13px;height:13px;border:2px solid rgba(0,0,0,.2);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:none}
   .spinner.on{display:block}@keyframes spin{to{transform:rotate(360deg)}}
 
-  /* Role tabs */
   .role-tabs{display:flex;gap:4px;margin-bottom:1.5rem;padding:5px;background:var(--surface);border-radius:12px;border:1px solid var(--border);width:fit-content;max-width:100%;overflow-x:auto}
   .role-tab{padding:8px 18px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--text-muted);transition:all .2s;white-space:nowrap;border:1px solid transparent;display:flex;align-items:center;gap:7px}
   .role-tab:hover{color:var(--text);background:var(--surface2)}
@@ -70,16 +70,17 @@
   .badge{font-size:11px;font-family:'DM Mono',monospace;background:var(--bg);padding:2px 7px;border-radius:20px;color:var(--text-muted)}
   .role-tab.active .badge{color:var(--gold)}
 
-  /* Taxonomy section */
   .taxonomy-section{display:none;animation:fadeUp .35s ease}
   .taxonomy-section.active{display:block}
   @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
   .section-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2rem;gap:1.5rem}
   .role-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:500;color:var(--text);line-height:1.2}
   .role-tagline{font-size:12px;color:var(--text-muted);margin-top:5px}
-  .section-actions{display:flex;gap:8px;flex-shrink:0}
-  .export-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
-  .export-btn:hover{border-color:var(--gold-border);color:var(--gold)}
+  .section-actions{display:flex;gap:8px;flex-shrink:0;align-items:center}
+  .action-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .action-btn:hover{border-color:var(--gold-border);color:var(--gold)}
+  .action-btn:disabled{opacity:.3;cursor:not-allowed}
+  .action-btn.danger:hover{border-color:rgba(251,113,133,.4);color:#fb7185}
 
   /* Tree */
   .tree-container{margin-bottom:2.5rem;overflow-x:auto;padding-bottom:1rem}
@@ -100,7 +101,6 @@
   .skill-tag.new-skill{animation:skillPop .5s cubic-bezier(.175,.885,.32,1.275) backwards}
   @keyframes skillPop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
 
-  /* Colours */
   .dn-gold{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.22);color:#e8c97a}
   .dn-blue{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.22);color:#93c5fd}
   .dn-teal{background:rgba(45,212,191,.08);border-color:rgba(45,212,191,.22);color:#5eead4}
@@ -122,7 +122,6 @@
   .empty-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--text-muted);margin-bottom:6px}
   .empty-desc{font-size:12px;color:var(--text-dim);line-height:1.6}
 
-  /* Activity */
   .activity-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem}
   .activity-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:500;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
   .activity-title::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -152,7 +151,6 @@
 </style>
 </head>
 <body>
-
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 
@@ -166,13 +164,17 @@
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:16px">
+      <div class="save-indicator">
+        <div class="save-dot" id="save-dot"></div>
+        <span id="save-label">No saved data</span>
+      </div>
       <div class="live-badge"><div class="live-dot"></div>Live</div>
       <div id="last-updated" style="font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace">Ready</div>
     </div>
   </header>
 
   <h1 class="page-title">Ansari Legal <em>Skill Taxonomies</em></h1>
-  <p class="page-subtitle">Paste any LinkedIn job description to extract and merge skills into your live taxonomy — powered by AI, free for all visitors.</p>
+  <p class="page-subtitle">Paste any LinkedIn job description to extract and merge skills into your live taxonomy. Skills are <strong style="color:var(--gold-light)">automatically saved</strong> in your browser and persist between visits.</p>
 
   <div class="stats-strip">
     <div class="stat-card"><div class="stat-label">Total Skills</div><div class="stat-value" id="stat-total">0 <span>skills</span></div></div>
@@ -185,7 +187,7 @@
     <div class="panel-title">Extract from Job Description</div>
     <div class="panel-sub">Paste any LinkedIn JD — skills are automatically categorised and merged into the taxonomy</div>
     <div class="input-row">
-      <textarea id="jd-input" placeholder="Paste a LinkedIn job description here...&#10;&#10;e.g. 'We are seeking a visionary CEO to lead our boutique law firm. The ideal candidate will have deep expertise in legal strategy, P&amp;L management, client relationship development...'"></textarea>
+      <textarea id="jd-input" placeholder="Paste a LinkedIn job description here...&#10;&#10;e.g. 'We are seeking a visionary CEO to lead our boutique law firm...'"></textarea>
       <select id="role-select">
         <option value="ceo">CEO / Founder</option>
         <option value="legal">LegalTech Lead</option>
@@ -211,7 +213,11 @@
   <div id="section-ceo" class="taxonomy-section active">
     <div class="section-header">
       <div><div class="role-title">CEO / Founder</div><div class="role-tagline">Strategic leadership, client development &amp; firm growth capabilities</div></div>
-      <div class="section-actions"><button class="export-btn" onclick="exportCSV('ceo')">↓ Export CSV</button></div>
+      <div class="section-actions">
+        <button class="action-btn" id="undo-ceo" onclick="undoLast('ceo')" disabled>↩ Undo Last</button>
+        <button class="action-btn danger" onclick="clearRole('ceo')">✕ Clear All</button>
+        <button class="action-btn" onclick="exportCSV('ceo')">↓ Export CSV</button>
+      </div>
     </div>
     <div id="tree-ceo"></div>
   </div>
@@ -219,7 +225,11 @@
   <div id="section-legal" class="taxonomy-section">
     <div class="section-header">
       <div><div class="role-title">LegalTech Lead</div><div class="role-tagline">Technology strategy, legal software &amp; digital transformation skills</div></div>
-      <div class="section-actions"><button class="export-btn" onclick="exportCSV('legal')">↓ Export CSV</button></div>
+      <div class="section-actions">
+        <button class="action-btn" id="undo-legal" onclick="undoLast('legal')" disabled>↩ Undo Last</button>
+        <button class="action-btn danger" onclick="clearRole('legal')">✕ Clear All</button>
+        <button class="action-btn" onclick="exportCSV('legal')">↓ Export CSV</button>
+      </div>
     </div>
     <div id="tree-legal"></div>
   </div>
@@ -227,7 +237,11 @@
   <div id="section-legalops" class="taxonomy-section">
     <div class="section-header">
       <div><div class="role-title">Legal Operations Lead</div><div class="role-tagline">Matter management, vendor relations, process improvement &amp; legal department efficiency</div></div>
-      <div class="section-actions"><button class="export-btn" onclick="exportCSV('legalops')">↓ Export CSV</button></div>
+      <div class="section-actions">
+        <button class="action-btn" id="undo-legalops" onclick="undoLast('legalops')" disabled>↩ Undo Last</button>
+        <button class="action-btn danger" onclick="clearRole('legalops')">✕ Clear All</button>
+        <button class="action-btn" onclick="exportCSV('legalops')">↓ Export CSV</button>
+      </div>
     </div>
     <div id="tree-legalops"></div>
   </div>
@@ -235,7 +249,11 @@
   <div id="section-ops" class="taxonomy-section">
     <div class="section-header">
       <div><div class="role-title">Chief of Staff / Operations</div><div class="role-tagline">Operational excellence, stakeholder management &amp; process leadership</div></div>
-      <div class="section-actions"><button class="export-btn" onclick="exportCSV('ops')">↓ Export CSV</button></div>
+      <div class="section-actions">
+        <button class="action-btn" id="undo-ops" onclick="undoLast('ops')" disabled>↩ Undo Last</button>
+        <button class="action-btn danger" onclick="clearRole('ops')">✕ Clear All</button>
+        <button class="action-btn" onclick="exportCSV('ops')">↓ Export CSV</button>
+      </div>
     </div>
     <div id="tree-ops"></div>
   </div>
@@ -243,7 +261,11 @@
   <div id="section-finance" class="taxonomy-section">
     <div class="section-header">
       <div><div class="role-title">Finance Lead</div><div class="role-tagline">Financial strategy, reporting, compliance &amp; risk management skills</div></div>
-      <div class="section-actions"><button class="export-btn" onclick="exportCSV('finance')">↓ Export CSV</button></div>
+      <div class="section-actions">
+        <button class="action-btn" id="undo-finance" onclick="undoLast('finance')" disabled>↩ Undo Last</button>
+        <button class="action-btn danger" onclick="clearRole('finance')">✕ Clear All</button>
+        <button class="action-btn" onclick="exportCSV('finance')">↓ Export CSV</button>
+      </div>
     </div>
     <div id="tree-finance"></div>
   </div>
@@ -265,18 +287,22 @@
 
 <script>
 // ── Config ─────────────────────────────────────────────────────────
-const GROQ_KEY = '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';
-const GROQ_MODEL = 'llama-3.3-70b-versatile';
-const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+const GROQ_KEY='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';
+const GROQ_MODEL='llama-3.3-70b-versatile';
+const GROQ_URL='https://api.groq.com/openai/v1/chat/completions';
+const STORAGE_KEY='ansari-legal-taxonomy-v1';
 
 // ── State ──────────────────────────────────────────────────────────
-const STATE={ceo:{},legal:{},legalops:{},ops:{},finance:{}};
+let STATE={ceo:{},legal:{},legalops:{},ops:{},finance:{}};
+// Undo stack: per role, stores snapshots of STATE[role] before each extraction
+const UNDO={ceo:[],legal:[],legalops:[],ops:[],finance:[]};
+
 const ROLE_META={
-  ceo:     {label:'CEO / Founder',         color:'#c9a84c'},
-  legal:   {label:'LegalTech Lead',         color:'#60a5fa'},
-  legalops:{label:'Legal Operations Lead',  color:'#34d399'},
-  ops:     {label:'Chief of Staff / Ops',   color:'#2dd4bf'},
-  finance: {label:'Finance Lead',           color:'#a78bfa'}
+  ceo:     {label:'CEO / Founder',        color:'#c9a84c'},
+  legal:   {label:'LegalTech Lead',        color:'#60a5fa'},
+  legalops:{label:'Legal Operations Lead', color:'#34d399'},
+  ops:     {label:'Chief of Staff / Ops',  color:'#2dd4bf'},
+  finance: {label:'Finance Lead',          color:'#a78bfa'}
 };
 const DOMAIN_COLORS={
   'Strategy & Leadership':'gold','Business Development':'gold',
@@ -312,6 +338,69 @@ function getDomainTagColor(d){if(!domainColorMap[d]){domainColorMap[d]=TAG_COLOR
 function getDomainNodeColor(d){const c=DOMAIN_COLORS[d];return c?'dn-'+c:'dn-gold';}
 function getDomainIcon(d){return DOMAIN_ICONS[d]||'◇';}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ── Save / Load ────────────────────────────────────────────────────
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify({state:STATE,activityLog:activityLog.slice(0,50)}));
+    const dot=document.getElementById('save-dot');
+    const lbl=document.getElementById('save-label');
+    dot.classList.add('saved');
+    lbl.textContent='Saved '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){console.warn('Save failed:',e);}
+}
+
+function loadState(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw)return;
+    const parsed=JSON.parse(raw);
+    if(parsed.state){
+      // Merge loaded state into STATE
+      for(const role of Object.keys(STATE)){
+        if(parsed.state[role]) STATE[role]=parsed.state[role];
+      }
+    }
+    if(parsed.activityLog) activityLog=parsed.activityLog;
+    const dot=document.getElementById('save-dot');
+    const lbl=document.getElementById('save-label');
+    dot.classList.add('saved');
+    lbl.textContent='Loaded from save';
+    showToast('Previous session restored.','#22c55e');
+  }catch(e){console.warn('Load failed:',e);}
+}
+
+// ── Undo ───────────────────────────────────────────────────────────
+function pushUndo(role){
+  // Deep copy current state for this role before modifying
+  UNDO[role].push(JSON.parse(JSON.stringify(STATE[role])));
+  // Keep only last 10 snapshots
+  if(UNDO[role].length>10) UNDO[role].shift();
+  document.getElementById('undo-'+role).disabled=false;
+}
+
+function undoLast(role){
+  if(!UNDO[role].length){showToast('Nothing to undo.','#fbbf24');return;}
+  STATE[role]=UNDO[role].pop();
+  if(!UNDO[role].length) document.getElementById('undo-'+role).disabled=true;
+  renderTree(role,false);
+  updateStats();updateBadges();
+  saveState();
+  showToast('Last extraction undone for '+ROLE_META[role].label,'#fbbf24');
+}
+
+// ── Clear role ─────────────────────────────────────────────────────
+function clearRole(role){
+  if(!Object.keys(STATE[role]).length){showToast('Nothing to clear.','#fbbf24');return;}
+  if(!confirm('Clear all skills for '+ROLE_META[role].label+'? This cannot be undone.'))return;
+  STATE[role]={};
+  UNDO[role]=[];
+  document.getElementById('undo-'+role).disabled=true;
+  renderTree(role,false);
+  updateStats();updateBadges();
+  saveState();
+  showToast('Cleared '+ROLE_META[role].label,'#fb7185');
+}
 
 // ── Tabs ───────────────────────────────────────────────────────────
 function switchTab(role){
@@ -353,10 +442,13 @@ Instructions:
 - Focus on skills actually mentioned or strongly implied in the JD
 - Mark truly new skills (not in existing) with "new": true
 
-Return ONLY a valid JSON object. No explanation, no markdown, no code fences. Example format:
-{"Strategy & Leadership":{"Leadership":[ {"name":"Strategic Planning","new":true} ]}}`;
+Return ONLY a valid JSON object. No explanation, no markdown, no code fences:
+{"Domain Name":{"Category Name":[{"name":"Skill Name","new":true}]}}`;
 
   try{
+    // Save snapshot for undo before making changes
+    pushUndo(role);
+
     const res=await fetch(GROQ_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_KEY},
@@ -365,13 +457,16 @@ Return ONLY a valid JSON object. No explanation, no markdown, no code fences. Ex
         temperature:0.2,
         max_tokens:1500,
         messages:[
-          {role:'system',content:'You are a skills taxonomy engine. You respond only with valid JSON objects, no explanation, no markdown.'},
+          {role:'system',content:'You are a skills taxonomy engine. Respond only with valid JSON objects, no explanation, no markdown.'},
           {role:'user',content:prompt}
         ]
       })
     });
 
     if(!res.ok){
+      // Undo the snapshot we just pushed since extraction failed
+      UNDO[role].pop();
+      if(!UNDO[role].length) document.getElementById('undo-'+role).disabled=true;
       const e=await res.json().catch(()=>({}));
       throw new Error(e?.error?.message||'Groq API error (HTTP '+res.status+')');
     }
@@ -402,6 +497,8 @@ Return ONLY a valid JSON object. No explanation, no markdown, no code fences. Ex
     }
 
     renderTree(role,true);updateStats();updateBadges();
+    saveState();
+
     const time=new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
     activityLog.unshift({role,roleLabel:ROLE_META[role].label,color:ROLE_META[role].color,count:newCount,time});
     renderActivity();
@@ -434,15 +531,12 @@ function renderTree(role,highlight){
   const totalSkills=domains.reduce((a,[,cats])=>a+Object.values(cats).reduce((b,s)=>b+(Array.isArray(s)?s.length:0),0),0);
 
   let html='<div class="tree-container"><div class="tree-inner">';
-
-  // Root node
   html+=`<div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0">`;
   html+=`<div class="root-node" style="border-color:${roleColor}33;background:${roleColor}0d">`;
   html+=`<span class="root-label" style="color:${roleColor}">${esc(ROLE_META[role].label)}</span>`;
   html+=`<span class="root-count" style="color:${roleColor};background:${roleColor}1a;border-color:${roleColor}33">${totalSkills}</span>`;
   html+=`</div></div>`;
   html+=`<div class="h-line"></div>`;
-
   html+=`<div style="display:flex;align-items:stretch;flex-shrink:0">`;
   html+=`<div style="display:flex;flex-direction:column;align-items:flex-start">`;
 
@@ -461,17 +555,11 @@ function renderTree(role,highlight){
     html+=`<div style="width:2px;background:var(--line);flex:1;min-height:1.1rem"></div>`;
     if(!isLast)html+=`<div style="width:2px;background:var(--line);flex:1;min-height:1.1rem"></div>`;
     html+=`</div>`;
-
     html+=`<div style="display:flex;flex-direction:column">`;
     html+=`<div style="display:flex;align-items:center">`;
     html+=`<div style="height:2px;width:1.5rem;background:var(--line);flex-shrink:0"></div>`;
-    html+=`<div class="domain-node ${nodeCls}" style="animation:fadeUp .3s ease ${di*60}ms backwards">`;
-    html+=`<span class="domain-icon">${icon}</span>`;
-    html+=`<span class="domain-label">${esc(domain)}</span>`;
-    html+=`<span class="domain-badge">${skillCount}</span>`;
-    html+=`</div>`;
+    html+=`<div class="domain-node ${nodeCls}" style="animation:fadeUp .3s ease ${di*60}ms backwards"><span class="domain-icon">${icon}</span><span class="domain-label">${esc(domain)}</span><span class="domain-badge">${skillCount}</span></div>`;
     html+=`<div style="height:2px;width:1.75rem;background:var(--line);flex-shrink:0"></div>`;
-
     html+=`<div style="display:flex;align-items:stretch">`;
     html+=`<div style="display:flex;flex-direction:column;align-items:center;width:2px;flex-shrink:0">`;
     catEntries.forEach((_,ci)=>{
@@ -480,7 +568,6 @@ function renderTree(role,highlight){
       if(ci<catEntries.length-1)html+=`<div style="width:2px;background:var(--line);flex:1;min-height:1.8rem"></div>`;
     });
     html+=`</div>`;
-
     html+=`<div style="display:flex;flex-direction:column;gap:.5rem;padding:.3rem 0">`;
     catEntries.forEach(([cat,skills])=>{
       html+=`<div style="display:flex;align-items:center">`;
@@ -566,7 +653,11 @@ function updateClock(){
 }
 updateClock();setInterval(updateClock,30000);
 
+// ── Init ───────────────────────────────────────────────────────────
+loadState();
 ['ceo','legal','legalops','ops','finance'].forEach(r=>renderTree(r,false));
+updateStats();updateBadges();
+if(activityLog.length)renderActivity();
 </script>
 </body>
 </html>
